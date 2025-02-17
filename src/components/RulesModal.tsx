@@ -1,22 +1,22 @@
 import { X } from "lucide-react";
 
 interface RulesModalProps {
-  isModalOpen: boolean;
-  onModalClose: () => void;
+  shouldRender: boolean;
+  onClose: () => void;
 }
 
-export function RulesModal({ isModalOpen, onModalClose }: RulesModalProps) {
+export function RulesModal({ shouldRender, onClose }: RulesModalProps) {
+  if (!shouldRender) return null;
+
   return (
-    <div
-      className={`bg-black/60 fixed inset-0 grid place-content-center ${isModalOpen ? "block" : "hidden"}`}
-    >
+    <div className="bg-black/60 fixed inset-0 grid place-content-center text-black">
       <div className="bg-white flex flex-col justify-center items-center gap-8 p-2 rounded-lg">
         <h2 className="text-xl font-bold">
           Rules: <span className="ml-2 text-2xl">⚠️</span>
         </h2>
         <button
           type="button"
-          onClick={onModalClose}
+          onClick={onClose}
           className="absolute right-1 top-[196px] hover:cursor-pointer"
         >
           <X />

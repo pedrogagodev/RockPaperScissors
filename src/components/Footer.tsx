@@ -1,12 +1,17 @@
+import { useState } from "react";
+import { RulesModal } from "./RulesModal";
+
 interface FooterProps {
   onModalOpen: () => void;
 }
-export function Footer({ onModalOpen }: FooterProps) {
+export function Footer() {
+  const [shouldModalRender, setShouldModalRender] = useState(false);
+
   return (
-    <div className="bg-[#000B58] text-white flex flex-col items-center py-1 gap-2">
+    <footer className="bg-[#000B58] text-white flex flex-col items-center py-1 gap-2">
       <button
         type="button"
-        onClick={onModalOpen}
+        onClick={() => setShouldModalRender(true)}
         className="border p-2 rounded-lg mt-2 bg-amber-50 text-black font-bold hover:cursor-pointer"
       >
         View Rules
@@ -20,6 +25,11 @@ export function Footer({ onModalOpen }: FooterProps) {
           Pedro Oliveira
         </a>
       </h3>
-    </div>
+
+      <RulesModal
+        shouldRender={shouldModalRender}
+        onClose={() => setShouldModalRender(false)}
+      />
+    </footer>
   );
 }
