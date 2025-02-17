@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { RulesModal } from "./RulesModal";
 
-interface FooterProps {
-  onModalOpen: () => void;
-}
 export function Footer() {
   const [shouldModalRender, setShouldModalRender] = useState(false);
 
