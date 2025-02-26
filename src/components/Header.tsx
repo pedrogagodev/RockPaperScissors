@@ -1,4 +1,9 @@
+import { useGameContext } from "../hooks/useGameContext";
+
 export function Header() {
+  const { state } = useGameContext();
+  const { playerScore, machineScore } = state;
+
   return (
     <div className="flex bg-[#000B58] justify-around text-white py-3 items-center">
       <h1 className="text-2xl">Rock Paper Scissors</h1>
@@ -7,10 +12,10 @@ export function Header() {
         <div className="border p-3 text-lg rounded-t-md">
           <h2 className="text-2xl mb-2">Score:</h2>
           <p>
-            Player: <span>0</span>
+            Player: <span>{playerScore}</span>
           </p>
           <p>
-            Machine: <span>0</span>
+            Machine: <span>{machineScore}</span>
           </p>
         </div>
         <button
