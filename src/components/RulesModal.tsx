@@ -11,16 +11,18 @@ export function RulesModal({ shouldRender, onClose }: RulesModalProps) {
   return (
     <div className="bg-black/60 fixed inset-0 grid place-content-center text-black">
       <div className="bg-white flex flex-col justify-center items-center gap-8 p-2 rounded-lg">
-        <h2 className="text-xl font-bold">
-          Rules: <span className="ml-2 text-2xl">⚠️</span>
-        </h2>
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-1 top-[196px] hover:cursor-pointer"
-        >
-          <X />
-        </button>
+        <div className="relative flex">
+          <h2 className="text-xl font-bold">
+            Rules: <span className="ml-2 text-2xl">⚠️</span>
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute left-[215px] hover:cursor-pointer"
+          >
+            <X />
+          </button>
+        </div>
 
         <ul className="flex flex-col gap-1 bg-indigo-200 rounded-lg p-2">
           <li> - Rock wins against Scissors.</li>
