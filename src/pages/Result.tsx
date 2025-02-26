@@ -2,13 +2,62 @@ import { useNavigate } from "react-router-dom";
 
 import IconRock from "../assets/images/icon-rock.svg";
 import IconPaper from "../assets/images/icon-paper.svg";
-import IconScissors from "../assets/images/icon-scissors.svg";
 import { useGameContext } from "../hooks/useGameContext";
+import { useCallback, useEffect, useRef } from "react";
 
 export function Result() {
-  const { dispatch } = useGameContext();
+  const { dispatch, state } = useGameContext();
+  const { playerChoice, machineChoice } = state;
 
   const navigate = useNavigate();
+  const isResultAlreadyCalculated = useRef(false);
+
+  const getResult = useCallback(() => {
+    if (isResultAlreadyCalculated.current) return;
+
+    isResultAlreadyCalculated.current = true;
+
+    const isPlayerWins = {
+      rock: "scissors",
+      paper: "rock",
+      scissors: "paper",
+    };
+
+    if (!playerChoice) {
+      return null;
+    }
+
+    if (isPlayerWins[playerChoice] === machineChoice) {
+      dispatch({
+        type: "SET_WINNER",
+        winner: "player",
+      });
+      dispatch({
+        type: "INCREMENT_PLAYER_SCORE",
+      });
+    } else if (playerChoice === machineChoice) {
+      dispatch({
+        type: "SET_WINNER",
+        winner: "draw",
+      });
+    } else {
+      dispatch({
+        type: "SET_WINNER",
+        winner: "machine",
+      });
+      dispatch({
+        type: "INCREMENT_MACHINE_SCORE",
+      });
+    }
+  }, [dispatch, playerChoice, machineChoice]);
+
+  useEffect(() => {
+    if (!playerChoice || !machineChoice) {
+      navigate("/");
+    }
+
+    getResult();
+  }, [getResult, playerChoice, machineChoice, navigate]);
 
   const handleClickTryAgain = () => {
     dispatch({ type: "TRY_AGAIN" });

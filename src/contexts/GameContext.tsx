@@ -22,6 +22,23 @@ function reducer(state: GameState, action: GameAction): GameState {
         machineChoice: action.option ?? null,
       };
 
+    case "SET_WINNER":
+      return {
+        ...state,
+        winner: action.winner,
+      };
+
+    case "INCREMENT_PLAYER_SCORE":
+      return {
+        ...state,
+        playerScore: state.playerScore + 1,
+      };
+    case "INCREMENT_MACHINE_SCORE":
+      return {
+        ...state,
+        machineScore: state.machineScore + 1,
+      };
+
     case "TRY_AGAIN":
       return {
         ...state,
