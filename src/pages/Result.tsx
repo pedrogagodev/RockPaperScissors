@@ -2,12 +2,14 @@ import { useNavigate } from "react-router-dom";
 
 import IconRock from "../assets/images/icon-rock.svg";
 import IconPaper from "../assets/images/icon-paper.svg";
+import IconScissors from "../assets/images/icon-scissors.svg";
+
 import { useGameContext } from "../hooks/useGameContext";
 import { useCallback, useEffect, useRef } from "react";
 
 export function Result() {
   const { dispatch, state } = useGameContext();
-  const { playerChoice, machineChoice } = state;
+  const { playerChoice, machineChoice, winner } = state;
 
   const navigate = useNavigate();
   const isResultAlreadyCalculated = useRef(false);
@@ -71,11 +73,45 @@ export function Result() {
         <h2>Machine</h2>
       </div>
       <div className="flex gap-8">
-        <img src={IconPaper} alt="" />
+        <img
+          src={
+            playerChoice === "rock"
+              ? IconRock
+              : playerChoice === "paper"
+                ? IconPaper
+                : IconScissors
+          }
+          alt={
+            playerChoice === "rock"
+              ? "Rock with hands"
+              : playerChoice === "paper"
+                ? "Paper with hands"
+                : "Scissors with hands"
+          }
+        />
         <span>X</span>
-        <img src={IconRock} alt="" />
+        <img
+          src={
+            machineChoice === "rock"
+              ? IconRock
+              : machineChoice === "paper"
+                ? IconPaper
+                : IconScissors
+          }
+          alt={
+            machineChoice === "rock"
+              ? "Rock with hands"
+              : machineChoice === "paper"
+                ? "Paper with hands"
+                : "Scissors with hands"
+          }
+        />
       </div>
-      <h2 className="text-xl">Player lose!</h2>
+      <h2 className="text-xl">
+        {winner === "draw"
+          ? "Draw!"
+          : `${winner === "player" ? "Player" : "Machine"} Wins!`}
+      </h2>
       <button
         type="button"
         className="hover:cursor-pointer bg-[#000B58] text-white rounded-md p-2"
