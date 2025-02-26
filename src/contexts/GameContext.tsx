@@ -21,6 +21,14 @@ function reducer(state: GameState, action: GameAction): GameState {
         ...state,
         machineChoice: action.option ?? null,
       };
+
+    case "TRY_AGAIN":
+      return {
+        ...state,
+        machineChoice: null,
+        playerChoice: null,
+        winner: null,
+      };
   }
 }
 
