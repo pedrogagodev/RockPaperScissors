@@ -46,6 +46,13 @@ function reducer(state: GameState, action: GameAction): GameState {
         playerChoice: null,
         winner: null,
       };
+
+    case "RESET_SCORE":
+      return {
+        ...state,
+        playerScore: 0,
+        machineScore: 0,
+      };
   }
 }
 

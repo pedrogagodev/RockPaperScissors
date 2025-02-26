@@ -1,7 +1,7 @@
 import { useGameContext } from "../hooks/useGameContext";
 
 export function Header() {
-  const { state } = useGameContext();
+  const { state, dispatch } = useGameContext();
   const { playerScore, machineScore } = state;
 
   return (
@@ -21,6 +21,9 @@ export function Header() {
         <button
           type="button"
           className=" w-full border border-t-0 rounded-b-md p-2"
+          onClick={() => {
+            dispatch({ type: "RESET_SCORE" });
+          }}
         >
           Reset
         </button>

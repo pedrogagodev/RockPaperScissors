@@ -7,7 +7,8 @@ export type GameAction = {
     | "SET_WINNER"
     | "INCREMENT_PLAYER_SCORE"
     | "INCREMENT_MACHINE_SCORE"
-    | "TRY_AGAIN";
+    | "TRY_AGAIN" 
+    | "RESET_SCORE";
   option?: GameOption;
   winner?: "player" | "machine" | "draw";
 };
