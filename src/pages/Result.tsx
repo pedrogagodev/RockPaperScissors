@@ -3,11 +3,15 @@ import { useNavigate } from "react-router-dom";
 import IconRock from "../assets/images/icon-rock.svg";
 import IconPaper from "../assets/images/icon-paper.svg";
 import IconScissors from "../assets/images/icon-scissors.svg";
+import { useGameContext } from "../hooks/useGameContext";
 
 export function Result() {
+  const { dispatch } = useGameContext();
+
   const navigate = useNavigate();
 
   const handleClickTryAgain = () => {
+    dispatch({ type: "TRY_AGAIN" });
     navigate("/");
   };
 
