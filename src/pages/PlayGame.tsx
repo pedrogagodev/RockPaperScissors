@@ -1,20 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import { Option } from "../components/Option";
 import { useGameContext } from "../hooks/useGameContext";
+import { Toaster } from "sonner";
 import type { GameOption } from "../types/GameOption";
 export function PlayGame() {
   const navigate = useNavigate();
-  const { dispatch } = useGameContext();
+  const { setPlayerChoice, checkPlayerChoice, dispatch } = useGameContext();
 
-  const handlePlayerChoice = (option: GameOption) => {
-    dispatch({
-      type: "SET_PLAYER_CHOICE",
-      option,
-    });
+  const handlePlayerChoice = (playerOption: GameOption) => {
+    if (playerOption) {
+      const isValidChoice = checkPlayerChoice(playerOption);
 
-    generateMachineChoice();
+      if (!isValidChoice) {
+        return;
+      }
 
-    navigate("/result");
+      setPlayerChoice(playerOption);
+      generateMachineChoice();
+      navigate("/result");
+    }
   };
 
   function generateMachineChoice() {
@@ -28,6 +32,14 @@ export function PlayGame() {
   }
   return (
     <div className="flex-grow flex flex-col items-center mt-24">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: " #ca2525 ",
+          },
+        }}
+      />
       <h2 className="font-bold text-2xl mb-8">Choose one:</h2>
       <Option setPlayerChoice={handlePlayerChoice} />
     </div>

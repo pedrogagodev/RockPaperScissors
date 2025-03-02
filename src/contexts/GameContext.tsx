@@ -1,9 +1,13 @@
-import { createContext, useReducer } from "react";
+import { createContext, useCallback, useReducer, useState } from "react";
 import type { GameState, GameAction } from "../types/GameContextAction";
+import type { GameOption } from "../types/GameOption";
+import { toast } from "sonner";
 
 type GameContextType = {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
+  setPlayerChoice: (playerChoice: GameOption) => void;
+  checkPlayerChoice: (playerChoice: GameOption) => boolean;
 };
 
 export const GameContext = createContext({} as GameContextType);
@@ -66,8 +70,30 @@ const initialGameState: GameState = {
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialGameState);
+  const [lastPlayerChoice, setLastPlayerChoice] = useState<null | GameOption>(
+    null
+  );
+
+  const checkPlayerChoice = useCallback(
+    (playerChoice: GameOption) => {
+      if (lastPlayerChoice === "rock" && playerChoice === "rock") {
+        toast.error("You cannot choose rock twice in a row!");
+        return false;
+      }
+      return true;
+    },
+    [lastPlayerChoice]
+  );
+
+  const setPlayerChoice = useCallback((playerChoice: GameOption) => {
+    dispatch({ type: "SET_PLAYER_CHOICE", option: playerChoice });
+    setLastPlayerChoice(playerChoice);
+  }, []);
+
   return (
-    <GameContext.Provider value={{ state, dispatch }}>
+    <GameContext.Provider
+      value={{ state, dispatch, setPlayerChoice, checkPlayerChoice }}
+    >
       {children}
     </GameContext.Provider>
   );
